@@ -1,9 +1,11 @@
+# -*- coding: utf-8 -*-
+import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib import use
-use('TkAgg')
-import matplotlib.pyplot as plt
-
 from show import show
+
+use('TkAgg')
+
 
 def displayData(X):
     """displays 2D data
@@ -24,7 +26,7 @@ def displayData(X):
 
 # Setup blank display
     display_array = - np.ones((pad + display_rows * (example_height + pad),
-                           pad + display_cols * (example_width + pad)))
+                               pad + display_cols * (example_width + pad)))
 
 # Copy each example into a patch on the display array
     curr_ex = 0
@@ -33,10 +35,13 @@ def displayData(X):
             if curr_ex > m:
                 break
             # Get the max value of the patch
-            max_val = np.max(np.abs(X[curr_ex, : ]))
-            rows = [pad + j * (example_height + pad) + x for x in np.arange(example_height+1)]
-            cols = [pad + i * (example_width + pad)  + x for x in np.arange(example_width+1)]
-            display_array[min(rows):max(rows), min(cols):max(cols)] = X[curr_ex, :].reshape(example_height, example_width) / max_val
+            max_val = np.max(np.abs(X[curr_ex, :]))
+            rows = [pad + j * (example_height + pad) +
+                    x for x in np.arange(example_height + 1)]
+            cols = [pad + i * (example_width + pad) +
+                    x for x in np.arange(example_width + 1)]
+            display_array[min(rows):max(rows), min(cols):max(cols)] = X[curr_ex, :].reshape(
+                example_height, example_width) / max_val
             curr_ex = curr_ex + 1
         if curr_ex > m:
             break
@@ -48,4 +53,3 @@ def displayData(X):
 # Do not show axis
     plt.axis('off')
     show()
-

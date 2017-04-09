@@ -1,3 +1,7 @@
+# -*- coding: utf-8 -*-
+from computeCost import computeCost
+
+
 def computeCostMulti(X, y, theta):
     """
      Compute cost for linear regression with multiple variables
@@ -10,7 +14,7 @@ def computeCostMulti(X, y, theta):
 # Instructions: Compute the cost of a particular choice of theta
 #               You should set J to the cost.
 
-
+    J = computeCost(X, y, theta)
 # =========================================================================
 
     return J

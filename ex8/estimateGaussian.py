@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import numpy as np
 
 
@@ -19,9 +20,6 @@ def estimateGaussian(X):
     #
 
 
-
 # =============================================================
 
     return mu, sigma2
-
-

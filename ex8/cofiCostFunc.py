@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import numpy as np
 
 
@@ -6,9 +7,10 @@ def cofiCostFunc(params, Y, R, num_users, num_movies, num_features, Lambda):
     """
 
     # Unfold the U and W matrices from params
-    X = np.array(params[:num_movies*num_features]).reshape(num_features, num_movies).T.copy()
-    Theta = np.array(params[num_movies*num_features:]).reshape(num_features, num_users).T.copy()
-
+    X = np.array(params[:num_movies * num_features]
+                 ).reshape(num_features, num_movies).T.copy()
+    Theta = np.array(params[num_movies * num_features:]
+                     ).reshape(num_features, num_users).T.copy()
 
     # You need to return the following values correctly
     J = 0
@@ -37,9 +39,8 @@ def cofiCostFunc(params, Y, R, num_users, num_movies, num_features, Lambda):
     #        Theta_grad - num_users x num_features matrix, containing the
     #                     partial derivatives w.r.t. to each element of Theta
 
-
     # =============================================================
 
-    grad = np.hstack((X_grad.T.flatten(),Theta_grad.T.flatten()))
+    grad = np.hstack((X_grad.T.flatten(), Theta_grad.T.flatten()))
 
     return J, grad

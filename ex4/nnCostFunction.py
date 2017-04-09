@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import numpy as np
 
 from ex2.sigmoid import sigmoid
@@ -5,7 +6,6 @@ from sigmoidGradient import sigmoidGradient
 
 
 def nnCostFunction(nn_params, input_layer_size, hidden_layer_size, num_labels, X, y, Lambda):
-
     """computes the cost and gradient of the neural network. The
   parameters for the neural network are "unrolled" into the vector
   nn_params and need to be converted back into the weight matrices.
@@ -18,11 +18,10 @@ def nnCostFunction(nn_params, input_layer_size, hidden_layer_size, num_labels, X
 # for our 2 layer neural network
 # Obtain Theta1 and Theta2 back from nn_params
     Theta1 = np.reshape(nn_params[:hidden_layer_size * (input_layer_size + 1)],
-                       (hidden_layer_size, input_layer_size + 1), order='F').copy()
+                        (hidden_layer_size, input_layer_size + 1), order='F').copy()
 
     Theta2 = np.reshape(nn_params[hidden_layer_size * (input_layer_size + 1):],
-                       (num_labels, (hidden_layer_size + 1)), order='F').copy()
-
+                        (num_labels, (hidden_layer_size + 1)), order='F').copy()
 
 
 # Setup some useful variables
@@ -45,12 +44,12 @@ def nnCostFunction(nn_params, input_layer_size, hidden_layer_size, num_labels, X
 #         that your implementation is correct by running checkNNGradients
 #
 #         Note: The vector y passed into the function is a vector of labels
-#               containing values from 1..K. You need to map this vector into a 
+#               containing values from 1..K. You need to map this vector into a
 #               binary vector of 1's and 0's to be used with the neural network
 #               cost function.
 #
 #         Hint: We recommend implementing backpropagation using a for-loop
-#               over the training examples if you are implementing it for the 
+#               over the training examples if you are implementing it for the
 #               first time.
 #
 # Part 3: Implement regularization with the cost function and gradients.
@@ -61,14 +60,11 @@ def nnCostFunction(nn_params, input_layer_size, hidden_layer_size, num_labels, X
 #               and Theta2_grad from Part 2.
 #
 
-
-
     # -------------------------------------------------------------
 
     # =========================================================================
 
     # Unroll gradient
     grad = np.hstack((Theta1_grad.T.ravel(), Theta2_grad.T.ravel()))
-
 
     return J, grad

@@ -1,10 +1,11 @@
+# -*- coding: utf-8 -*-
+import os
+from collections import OrderedDict
+from json import dumps, loads
 from urllib import urlencode
 from urllib2 import urlopen
-from json import loads, dumps
-from collections import OrderedDict
-import numpy as np
-import os
 
+import numpy as np
 
 
 class Submission():
@@ -20,14 +21,13 @@ class Submission():
 
     def __init__(self):
         self.__submit_url = 'https://www-origin.coursera.org/api/onDemandProgrammingImmediateFormSubmissions.v1'
-        
-        
+
     def submit(self):
         print '==\n== Submitting Solutions | Programming Exercise %s\n==' % self.__homework
         self.login_prompt()
 
         parts = OrderedDict()
-        for part_id, _ in enumerate(self.__srcs,1):
+        for part_id, _ in enumerate(self.__srcs, 1):
             parts[str(part_id)] = {'output': self.__output(part_id)}
 
         result, response = self.request(parts)
@@ -40,16 +40,15 @@ class Submission():
         print '=='
         print '== %43s | %9s | %-s' % ('Part Name', 'Score', 'Feedback')
         print '== %43s | %9s | %-s' % ('---------', '-----', '--------')
-        
 
         for part in parts:
             partFeedback = response['partFeedbacks'][part]
             partEvaluation = response['partEvaluations'][part]
-            score = '%d / %3d' % (partEvaluation['score'], partEvaluation['maxScore'])
-            print '== %43s | %9s | %-s' % (self.__part_names[int(part)-1], score, partFeedback)
+            score = '%d / %3d' % (partEvaluation['score'],
+                                  partEvaluation['maxScore'])
+            print '== %43s | %9s | %-s' % (self.__part_names[int(part) - 1], score, partFeedback)
 
         evaluation = response['evaluation']
-    
 
         totalScore = '%d / %d' % (evaluation['score'], evaluation['maxScore'])
         print '==                                   --------------------------------'
@@ -71,7 +70,8 @@ class Submission():
             pass
 
         if self.__login is not None and self.__password is not None:
-            reenter = raw_input('Use token from last successful submission (%s)? (Y/n): ' % self.__login)
+            reenter = raw_input(
+                'Use token from last successful submission (%s)? (Y/n): ' % self.__login)
 
             if reenter == '' or reenter[0] == 'Y' or reenter[0] == 'y':
                 return
@@ -95,6 +95,7 @@ class Submission():
             return 0, f.read()
         finally:
             f.close()
+
 
 def sprintf(fmt, arg):
     "emulates (part of) Octave sprintf function"

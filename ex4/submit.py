@@ -1,37 +1,36 @@
+# -*- coding: utf-8 -*-
 import numpy as np
-
-from Submission import Submission
-from Submission import sprintf
+from Submission import Submission, sprintf
 
 homework = 'neural-network-learning'
 
 part_names = [
-  'Feedforward and Cost Function',
-  'Regularized Cost Function',
-  'Sigmoid Gradient',
-  'Neural Network Gradient (Backpropagation)',
-  'Regularized Gradient',
-  ]
+    'Feedforward and Cost Function',
+    'Regularized Cost Function',
+    'Sigmoid Gradient',
+    'Neural Network Gradient (Backpropagation)',
+    'Regularized Gradient',
+]
 
 srcs = [
-  'nnCostFunction.py',
-  'nnCostFunction.py',
-  'sigmoidGradient.py',
-  'nnCostFunction.py',
-  'nnCostFunction.py',
-  ]
+    'nnCostFunction.py',
+    'nnCostFunction.py',
+    'sigmoidGradient.py',
+    'nnCostFunction.py',
+    'nnCostFunction.py',
+]
 
 
 def output(part_id):
     # Random Test Cases
-    X = np.reshape(3.0*np.sin(np.linspace(1, 30, 30)), (3, 10), order='F')
-    Xm = np.reshape(np.sin(np.linspace(1, 32, 32)), (16, 2), order='F')/5.0
-    ym = np.array(1 + np.mod(range(1,17),4))
-    t1 = np.sin(np.reshape(range(1,24,2), (4,3), order='F'))
-    t2 = np.cos(np.reshape(range(1,40,2), (4,5), order='F'))
+    X = np.reshape(3.0 * np.sin(np.linspace(1, 30, 30)), (3, 10), order='F')
+    Xm = np.reshape(np.sin(np.linspace(1, 32, 32)), (16, 2), order='F') / 5.0
+    ym = np.array(1 + np.mod(range(1, 17), 4))
+    t1 = np.sin(np.reshape(range(1, 24, 2), (4, 3), order='F'))
+    t2 = np.cos(np.reshape(range(1, 40, 2), (4, 5), order='F'))
     t = np.hstack((t1.T.ravel(), t2.T.ravel()))
 
-    fname = srcs[part_id-1].rsplit('.',1)[0]
+    fname = srcs[part_id - 1].rsplit('.', 1)[0]
     mod = __import__(fname, fromlist=[fname], level=1)
     func = getattr(mod, fname)
 
@@ -49,6 +48,7 @@ def output(part_id):
     elif part_id == 5:
         J, grad = func(t, 2, 4, 4, Xm, ym, 1.5)
         return sprintf('%0.5f ', np.hstack((J, grad)).tolist())
+
 
 s = Submission(homework, part_names, srcs, output)
 try:

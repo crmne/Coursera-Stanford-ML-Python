@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 try:
     from urllib import urlencode
 except ImportError:
@@ -7,7 +8,10 @@ from json import loads, dumps
 from collections import OrderedDict
 import numpy as np
 import os
+from collections import OrderedDict
+from json import dumps, loads
 
+import numpy as np
 
 
 class Submission():
@@ -22,44 +26,44 @@ class Submission():
         self.__password = None
 
     def submit(self):
-        print '==\n== Submitting Solutions | Programming Exercise %s\n==' % self.__homework
+        print('==\n== Submitting Solutions | Programming Exercise %s\n==' %
+              self.__homework)
         self.login_prompt()
 
         parts = OrderedDict()
-        for part_id, _ in enumerate(self.__srcs,1):
+        for part_id, _ in enumerate(self.__srcs, 1):
             parts[str(part_id)] = {'output': self.__output(part_id)}
 
         result, response = self.request(parts)
-        response = loads(response)
+        response = loads(response.decode("utf-8"))
         try:
-            print response['errorMessage']
+            print(response['errorMessage'])
             return
         except:
             pass
-        print '=='
-        print '== %43s | %9s | %-s' % ('Part Name', 'Score', 'Feedback')
-        print '== %43s | %9s | %-s' % ('---------', '-----', '--------')
-        
+        print('==')
+        print('== %43s | %9s | %-s' % ('Part Name', 'Score', 'Feedback'))
+        print('== %43s | %9s | %-s' % ('---------', '-----', '--------'))
 
         for part in parts:
             partFeedback = response['partFeedbacks'][part]
             partEvaluation = response['partEvaluations'][part]
-            score = '%d / %3d' % (partEvaluation['score'], partEvaluation['maxScore'])
-            print '== %43s | %9s | %-s' % (self.__part_names[int(part)-1], score, partFeedback)
+            score = '%d / %3d' % (partEvaluation['score'],
+                                  partEvaluation['maxScore'])
+            print('== %43s | %9s | %-s' %
+                  (self.__part_names[int(part) - 1], score, partFeedback))
 
         evaluation = response['evaluation']
-    
 
         totalScore = '%d / %d' % (evaluation['score'], evaluation['maxScore'])
-        print '==                                   --------------------------------'
-        print '== %43s | %9s | %-s\n' % (' ', totalScore, ' ')
-        print '=='
+        print('==                                   --------------------------------')
+        print('== %43s | %9s | %-s\n' % (' ', totalScore, ' '))
+        print('==')
 
         if not os.path.isfile('token.txt'):
             with open('token.txt', 'w') as f:
                 f.write(self.__login + '\n')
                 f.writelines(self.__password)
-
 
     def login_prompt(self):
         try:
@@ -70,15 +74,16 @@ class Submission():
             pass
 
         if self.__login is not None and self.__password is not None:
-            reenter = raw_input('Use token from last successful submission (%s)? (Y/n): ' % self.__login)
+            reenter = input(
+                'Use token from last successful submission (%s)? (Y/n): ' % self.__login)
 
             if reenter == '' or reenter[0] == 'Y' or reenter[0] == 'y':
                 return
 
         if os.path.isfile('token.txt'):
             os.remove('token.txt')
-        self.__login = raw_input('Login (email address): ')
-        self.__password = raw_input('Token: ')
+        self.__login = input('Login (email address): ')
+        self.__password = input('Token: ')
 
     def request(self, parts):
 
@@ -88,12 +93,13 @@ class Submission():
             'parts': parts,
             'submitterEmail': self.__login}
 
-        params = urlencode({'jsonBody': dumps(params)})
+        params = urlencode({'jsonBody': dumps(params)}).encode("utf-8")
         f = urlopen(self.__submit_url, params)
         try:
             return 0, f.read()
         finally:
             f.close()
+
 
 def sprintf(fmt, arg):
     "emulates (part of) Octave sprintf function"

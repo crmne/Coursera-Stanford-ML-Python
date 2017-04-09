@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 def projectData(X, U, K):
     """computes the projection of
     the normalized inputs X into the reduced dimensional space spanned by
@@ -13,9 +14,6 @@ def projectData(X, U, K):
     #                    projection_k = x' * U(:, k)
     #
 
-
-
     # =============================================================
-
 
     return Z

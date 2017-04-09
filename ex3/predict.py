@@ -1,6 +1,8 @@
+# -*- coding: utf-8 -*-
 import numpy as np
 
 from ex2.sigmoid import sigmoid
+
 
 def predict(Theta1, Theta2, X):
     """ outputs the predicted label of X given the
@@ -13,7 +15,7 @@ def predict(Theta1, Theta2, X):
 
 # ====================== YOUR CODE HERE ======================
 # Instructions: Complete the following code to make predictions using
-#               your learned neural network. You should set p to a 
+#               your learned neural network. You should set p to a
 #               vector containing labels between 1 to num_labels.
 #
 # Hint: The max function might come in useful. In particular, the max
@@ -25,4 +27,3 @@ def predict(Theta1, Theta2, X):
 # =========================================================================
 
     return p + 1        # add 1 to offset index of maximum in A row
-

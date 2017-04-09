@@ -1,7 +1,8 @@
+# -*- coding: utf-8 -*-
 import numpy as np
 
 
-def normalEqn(X,y):
+def normalEqn(X, y):
     """ Computes the closed-form solution to linear regression
        normalEqn(X,y) computes the closed-form solution to linear
        regression using the normal equations.
@@ -14,10 +15,10 @@ def normalEqn(X,y):
 
 # ---------------------- Sample Solution ----------------------
 
-
+    # theta = np.linalg.pinv(X.T.dot(X)).dot(X.T).dot(y)
+    theta = np.linalg.solve(X.T.dot(X), X.T.dot(y))
 # -------------------------------------------------------------
 
     return theta
 
 # ============================================================
-

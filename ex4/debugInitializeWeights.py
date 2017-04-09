@@ -1,4 +1,6 @@
+# -*- coding: utf-8 -*-
 import numpy as np
+
 
 def debugInitializeWeights(fan_out, fan_in):
     """initializes the weights of a layer with fan_in incoming connections
@@ -13,8 +15,7 @@ def debugInitializeWeights(fan_out, fan_in):
 
 # Initialize W using "sin", this ensures that W is always of the same
 # values and will be useful for debugging
-    W = np.reshape(np.sin(range(1, W.size+1)), W.T.shape).T / 10.0
+    W = np.reshape(np.sin(range(1, W.size + 1)), W.T.shape).T / 10.0
     return W
 
 # =========================================================================
-

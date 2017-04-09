@@ -1,16 +1,18 @@
-from matplotlib import use, cm
-use('TkAgg')
+# -*- coding: utf-8 -*-
+import matplotlib.pyplot as plt
 import numpy as np
 import scipy.io
-import matplotlib.pyplot as plt
-
 from estimateGaussian import estimateGaussian
-from selectThreshold import selectThreshold
+from matplotlib import cm, use
 from multivariateGaussian import multivariateGaussian
-from visualizeFit import visualizeFit
+from selectThreshold import selectThreshold
 from show import show
+from visualizeFit import visualizeFit
 
-## Machine Learning Online Class
+use('TkAgg')
+
+
+# Machine Learning Online Class
 #  Exercise 8 | Anomaly Detection and Collaborative Filtering
 #
 #  Instructions
@@ -27,7 +29,7 @@ from show import show
 #  or any other files other than those mentioned above.
 #
 
-## ================== Part 1: Load Example Dataset  ===================
+# ================== Part 1: Load Example Dataset  ===================
 #  We start this exercise by using a small dataset that is easy to
 #  visualize.
 #
@@ -51,15 +53,15 @@ plt.axis([0, 30, 0, 30])
 plt.xlabel('Latency (ms)')
 plt.ylabel('Throughput (mb/s)')
 show()
-raw_input("Program paused. Press Enter to continue...")  
+raw_input("Program paused. Press Enter to continue...")
 
 
-## ================== Part 2: Estimate the dataset statistics ===================
+# ================== Part 2: Estimate the dataset statistics =============
 #  For this exercise, we assume a Gaussian distribution for the dataset.
 #
-#  We first estimate the parameters of our assumed Gaussian distribution, 
-#  then compute the probabilities for each of the points and then visualize 
-#  both the overall distribution and where each of the points falls in 
+#  We first estimate the parameters of our assumed Gaussian distribution,
+#  then compute the probabilities for each of the points and then visualize
+#  both the overall distribution and where each of the points falls in
 #  terms of that distribution.
 #
 print 'Visualizing Gaussian fit.'
@@ -67,7 +69,7 @@ print 'Visualizing Gaussian fit.'
 #  Estimate my and sigma2
 mu, sigma2 = estimateGaussian(X)
 
-#  Returns the density of the multivariate normal at each data point (row) 
+#  Returns the density of the multivariate normal at each data point (row)
 #  of X
 p = multivariateGaussian(X, mu, sigma2)
 
@@ -77,12 +79,12 @@ plt.xlabel('Latency (ms)')
 plt.ylabel('Throughput (mb/s)')
 show()
 
-raw_input("Program paused. Press Enter to continue...")  
+raw_input("Program paused. Press Enter to continue...")
 
-## ================== Part 3: Find Outliers ===================
+# ================== Part 3: Find Outliers ===================
 #  Now you will find a good epsilon threshold using a cross-validation set
 #  probabilities given the estimated Gaussian distribution
-# 
+#
 
 pval = multivariateGaussian(Xval, mu, sigma2)
 
@@ -95,14 +97,15 @@ print '   (you should see a value epsilon of about 8.99e-05)'
 outliers = np.where(p < epsilon, True, False)
 
 #  Draw a red circle around those outliers
-plt.plot(X[outliers, 0], X[outliers, 1], 'ro', lw=2, markersize=10, fillstyle='none', markeredgewidth=1)
+plt.plot(X[outliers, 0], X[outliers, 1], 'ro', lw=2,
+         markersize=10, fillstyle='none', markeredgewidth=1)
 show()
 
 raw_input("Program paused. Press Enter to continue...")
 
-## ================== Part 4: Multidimensional Outliers ===================
-#  We will now use the code from the previous part and apply it to a 
-#  harder problem in which more features describe each datapoint and only 
+# ================== Part 4: Multidimensional Outliers ===================
+#  We will now use the code from the previous part and apply it to a
+#  harder problem in which more features describe each datapoint and only
 #  some features indicate whether a point is an outlier.
 #
 
@@ -116,7 +119,7 @@ yval = data['yval'].flatten()
 #  Apply the same steps to the larger dataset
 mu, sigma2 = estimateGaussian(X)
 
-#  Training set 
+#  Training set
 p = multivariateGaussian(X, mu, sigma2)
 
 #  Cross-validation set
@@ -129,6 +132,3 @@ print 'Best epsilon found using cross-validation: %e' % epsilon
 print 'Best F1 on Cross Validation Set:  %f' % F1
 print '# Outliers found: %d' % sum(p < epsilon)
 print '   (you should see a value epsilon of about 1.38e-18)'
-
-
-

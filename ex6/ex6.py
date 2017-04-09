@@ -1,9 +1,10 @@
-## Machine Learning Online Class
+# -*- coding: utf-8 -*-
+# Machine Learning Online Class
 #  Exercise 6 | Support Vector Machines
 #
 #  Instructions
 #  ------------
-# 
+#
 #  This file contains code that helps you get started on the
 #  exercise. You will need to complete the following functions:
 #
@@ -15,25 +16,26 @@
 #  For this exercise, you will not need to change any code in this file,
 #  or any other files other than those mentioned above.
 #
-from matplotlib import use, cm
-use('TkAgg')
 import numpy as np
 import scipy.io
-from sklearn import svm
 from dataset3Params import dataset3Params
+from matplotlib import cm, use
 from plotData import plotData
+from sklearn import svm
 from visualizeBoundary import visualizeBoundary
 from visualizeBoundaryLinear import visualizeBoundaryLinear
 
-## =============== Part 1: Loading and Visualizing Data ================
-#  We start the exercise by first loading and visualizing the dataset. 
+use('TkAgg')
+
+# =============== Part 1: Loading and Visualizing Data ================
+#  We start the exercise by first loading and visualizing the dataset.
 #  The following code will load the dataset into your environment and plot
 #  the data.
 #
 
 print 'Loading and Visualizing Data ...'
 
-# Load from ex6data1: 
+# Load from ex6data1:
 # You will have X, y in your environment
 data = scipy.io.loadmat('ex6data1.mat')
 X = data['X']
@@ -44,7 +46,7 @@ plotData(X, y)
 
 raw_input("Program paused. Press Enter to continue...")
 
-## ==================== Part 2: Training Linear SVM ====================
+# ==================== Part 2: Training Linear SVM ====================
 #  The following code will train a linear SVM on the dataset and plot the
 #  decision boundary learned.
 #
@@ -67,7 +69,7 @@ visualizeBoundaryLinear(X, y, model)
 
 raw_input("Program paused. Press Enter to continue...")
 
-## =============== Part 3: Implementing Gaussian Kernel ===============
+# =============== Part 3: Implementing Gaussian Kernel ===============
 #  You will now implement the Gaussian kernel to use
 #  with the SVM. You should complete the code in gaussianKernel.m
 #
@@ -83,7 +85,7 @@ sigma = 2
 
 raw_input("Program paused. Press Enter to continue...")
 
-## =============== Part 4: Visualizing Dataset 2 ================
+# =============== Part 4: Visualizing Dataset 2 ================
 #  The following code will load the next dataset into your environment and
 #  plot the data.
 #
@@ -101,7 +103,7 @@ plotData(X, y)
 
 raw_input("Program paused. Press Enter to continue...")
 
-## ========== Part 5: Training SVM with RBF Kernel (Dataset 2) ==========
+# ========== Part 5: Training SVM with RBF Kernel (Dataset 2) ==========
 #  After you have implemented the kernel, we can now use it to train the
 #  SVM classifier.
 #
@@ -128,7 +130,7 @@ visualizeBoundary(X, y, model)
 
 raw_input("Program paused. Press Enter to continue...")
 
-## =============== Part 6: Visualizing Dataset 3 ================
+# =============== Part 6: Visualizing Dataset 3 ================
 #  The following code will load the next dataset into your environment and
 #  plot the data.
 #
@@ -146,7 +148,7 @@ plotData(X, y)
 
 raw_input("Program paused. Press Enter to continue...")
 
-## ========== Part 7: Training SVM with RBF Kernel (Dataset 3) ==========
+# ========== Part 7: Training SVM with RBF Kernel (Dataset 3) ==========
 
 #  This is a different dataset that you can use to experiment with. Try
 #  different values of C and sigma here.
@@ -168,4 +170,3 @@ model = clf.fit(X, y)
 visualizeBoundary(X, y, model)
 
 raw_input("Program paused. Press Enter to continue...")
-

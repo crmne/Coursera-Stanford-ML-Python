@@ -1,7 +1,6 @@
+# -*- coding: utf-8 -*-
 import numpy as np
-
-from Submission import Submission
-from Submission import sprintf
+from Submission import Submission, sprintf
 
 __all__ = ['submit']
 
@@ -14,7 +13,7 @@ part_names = [
     'Predict',
     'Regularized Logistic Regression Cost',
     'Regularized Logistic Regression Gradient',
-    ]
+]
 
 srcs = [
     'sigmoid.py',
@@ -23,16 +22,16 @@ srcs = [
     'predict.py',
     'costFunctionReg.py',
     'gradientFunctionReg.py',
-    ]
+]
 
 
 def output(part_id):
     X = np.column_stack((np.ones(20),
-                          (np.exp(1) * np.sin(np.linspace(1, 20, 20))),
-                          (np.exp(0.5) * np.cos(np.linspace(1, 20, 20)))))
-    Y = np.sin(X[:,0] + X[:,1]) > 0
+                         (np.exp(1) * np.sin(np.linspace(1, 20, 20))),
+                         (np.exp(0.5) * np.cos(np.linspace(1, 20, 20)))))
+    Y = np.sin(X[:, 0] + X[:, 1]) > 0
 
-    fname = srcs[part_id-1].rsplit('.',1)[0]
+    fname = srcs[part_id - 1].rsplit('.', 1)[0]
     mod = __import__(fname, fromlist=[fname], level=1)
     func = getattr(mod, fname)
 
@@ -48,6 +47,7 @@ def output(part_id):
         return sprintf('%0.5f ', func(np.array([0.25, 0.5, -0.5]), X, Y, 0.1))
     elif part_id == 6:
         return sprintf('%0.5f ', func(np.array([0.25, 0.5, -0.5]), X, Y, 0.1))
+
 
 s = Submission(homework, part_names, srcs, output)
 try:

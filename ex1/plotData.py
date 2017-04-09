@@ -1,5 +1,7 @@
+# -*- coding: utf-8 -*-
 import matplotlib.pyplot as plt
 import numpy as np
+
 
 def plotData(data):
     """
@@ -18,6 +20,12 @@ def plotData(data):
 #       appear as red crosses. Furthermore, you can make the
 #       markers larger by using plot(..., 'rx', 'MarkerSize', 10);
 
+    X = data[:, 0]
+    y = data[:, 1]
+
     plt.figure()  # open a new figure window
+    plt.xlabel("Population of City in 10,000s")
+    plt.ylabel("Profit in $10,000s")
+    plt.plot(X, y, 'rx', markersize=10)
 
 # ============================================================

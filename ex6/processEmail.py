@@ -1,7 +1,10 @@
-from string import lower
-from porterStemmer import porterStemmer
-from getVocabList import getVocabList
+# -*- coding: utf-8 -*-
 import re
+from string import lower
+
+from getVocabList import getVocabList
+from porterStemmer import porterStemmer
+
 
 def processEmail(email_contents):
     """preprocesses a the body of an email and
@@ -81,7 +84,7 @@ def processEmail(email_contents):
 
         # Skip the word if it is too short
         if len(str) < 1:
-           continue
+            continue
 
         # Look up the word in the dictionary and add to word_indices if
         # found
@@ -105,9 +108,6 @@ def processEmail(email_contents):
         #       str2). It will return 1 only if the two strings are equivalent.
         #
 
-
-
-
         # =============================================================
 
         # Print to screen, ensuring that the output lines are not too long
@@ -121,4 +121,3 @@ def processEmail(email_contents):
 # Print footer
     print '\n========================='
     return word_indices
-

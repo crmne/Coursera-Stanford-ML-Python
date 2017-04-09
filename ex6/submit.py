@@ -1,35 +1,34 @@
+# -*- coding: utf-8 -*-
 import numpy as np
 import scipy.io
-
-from Submission import Submission
-from Submission import sprintf
+from Submission import Submission, sprintf
 
 homework = 'support-vector-machines'
 
 part_names = [
-  'Gaussian Kernel',
-  'Parameters (C, sigma) for Dataset 3',
-  'Email Preprocessing',
-  'Email Feature Extraction',
-  ]
+    'Gaussian Kernel',
+    'Parameters (C, sigma) for Dataset 3',
+    'Email Preprocessing',
+    'Email Feature Extraction',
+]
 
 srcs = [
-  'gaussianKernel.py',
-  'dataset3Params.py',
-  'processEmail.py',
-  'emailFeatures.py',
-  ]
+    'gaussianKernel.py',
+    'dataset3Params.py',
+    'processEmail.py',
+    'emailFeatures.py',
+]
 
 
 def output(part_id):
     # Random Test Cases
-    x1 = np.sin(np.arange(1,11))
-    x2 = np.cos(np.arange(1,11))
+    x1 = np.sin(np.arange(1, 11))
+    x2 = np.cos(np.arange(1, 11))
     ec = 'the quick brown fox jumped over the lazy dog'
     wi = np.abs(np.round(x1 * 1863))
     wi = np.hstack((wi, wi))
 
-    fname = srcs[part_id-1].rsplit('.',1)[0]
+    fname = srcs[part_id - 1].rsplit('.', 1)[0]
     mod = __import__(fname, fromlist=[fname], level=1)
     func = getattr(mod, fname)
 
@@ -50,6 +49,7 @@ def output(part_id):
     elif part_id == 4:
         x = func(wi)
         return sprintf('%d', x)
+
 
 s = Submission(homework, part_names, srcs, output)
 try:

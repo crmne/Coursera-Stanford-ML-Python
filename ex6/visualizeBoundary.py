@@ -1,6 +1,8 @@
+# -*- coding: utf-8 -*-
 import numpy as np
-from plotData import plotData
 from matplotlib import pyplot as plt
+from plotData import plotData
+
 
 def visualizeBoundary(X, y, model):
     """plots a non-linear decision boundary learned by the
@@ -10,8 +12,8 @@ def visualizeBoundary(X, y, model):
     plotData(X, y)
 
     # Make classification predictions over a grid of values
-    x1plot = np.linspace(min(X[:,0]), max(X[:,0]), X.shape[0]).T
-    x2plot = np.linspace(min(X[:,1]), max(X[:,1]), X.shape[0]).T
+    x1plot = np.linspace(min(X[:, 0]), max(X[:, 0]), X.shape[0]).T
+    x2plot = np.linspace(min(X[:, 1]), max(X[:, 1]), X.shape[0]).T
     X1, X2 = np.meshgrid(x1plot, x2plot)
     vals = np.zeros(X1.shape)
 
@@ -20,5 +22,5 @@ def visualizeBoundary(X, y, model):
         vals[:, i] = model.predict(this_X)
 
     # Plot the SVM boundary
-    #contour(X1, X2, vals, [0 0], 'Color', 'b')
+    # contour(X1, X2, vals, [0 0], 'Color', 'b')
     plt.contour(X1, X2, vals, levels=[0.0, 0.0])

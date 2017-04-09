@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import numpy as np
 
 
@@ -25,7 +26,7 @@ def computeCentroids(X, idx, K):
 #               centroid i.
 #
 # Note: You can use a for-loop over the centroids to compute this.
-# 
+#
 
 
 # =============================================================

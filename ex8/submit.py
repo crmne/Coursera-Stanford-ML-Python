@@ -1,27 +1,26 @@
+# -*- coding: utf-8 -*-
 import numpy as np
-
-from Submission import Submission
-from Submission import sprintf
+from Submission import Submission, sprintf
 
 homework = 'anomaly-detection-and-recommender-systems'
 
 part_names = [
-  'Estimate Gaussian Parameters',
-  'Select Threshold',
-  'Collaborative Filtering Cost',
-  'Collaborative Filtering Gradient',
-  'Regularized Cost',
-  'Regularized Gradient',
-  ]
+    'Estimate Gaussian Parameters',
+    'Select Threshold',
+    'Collaborative Filtering Cost',
+    'Collaborative Filtering Gradient',
+    'Regularized Cost',
+    'Regularized Gradient',
+]
 
 srcs = [
-  'estimateGaussian.py',
-  'selectThreshold.py',
-  'cofiCostFunc.py',
-  'cofiCostFunc.py',
-  'cofiCostFunc.py',
-  'cofiCostFunc.py',
-  ]
+    'estimateGaussian.py',
+    'selectThreshold.py',
+    'cofiCostFunc.py',
+    'cofiCostFunc.py',
+    'cofiCostFunc.py',
+    'cofiCostFunc.py',
+]
 
 
 def output(part_id):
@@ -29,15 +28,15 @@ def output(part_id):
     n_u = 3
     n_m = 4
     n = 5
-    X = np.sin(np.arange(1,n_m*n+1)).reshape((n, n_m)).T
-    Theta = np.cos(np.arange(1,n_u*n+1)).reshape((n, n_u)).T
-    Y = np.sin(np.arange(1,2.0*n_m*n_u,2.0)).reshape((n_u, n_m)).T
+    X = np.sin(np.arange(1, n_m * n + 1)).reshape((n, n_m)).T
+    Theta = np.cos(np.arange(1, n_u * n + 1)).reshape((n, n_u)).T
+    Y = np.sin(np.arange(1, 2.0 * n_m * n_u, 2.0)).reshape((n_u, n_m)).T
     R = Y > 0.5
     pval = np.hstack((np.abs(Y.T.flatten()), 0.001, 1.0))
     yval = np.hstack((R.T.flatten(), 1.0, 0.0)).astype('bool')
     params = np.hstack((X.T.flatten(), Theta.T.flatten()))
 
-    fname = srcs[part_id-1].rsplit('.',1)[0]
+    fname = srcs[part_id - 1].rsplit('.', 1)[0]
     mod = __import__(fname, fromlist=[fname], level=1)
     func = getattr(mod, fname)
 
@@ -59,6 +58,7 @@ def output(part_id):
     elif part_id == 6:
         J, grad = func(params, Y, R, n_u, n_m, n, 1.5)
         return sprintf('%0.5f ', grad.T.flatten())
+
 
 s = Submission(homework, part_names, srcs, output)
 try:

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import numpy as np
 
 
@@ -8,7 +9,8 @@ def featureNormalize(X):
        is 1. This is often a good preprocessing step to do when
        working with learning algorithms.
     """
-    X_norm, mu, sigma = 0,0,0
+    X_norm, mu, sigma = np.empty_like(X), np.empty(
+        X.shape[1]), np.empty(X.shape[1])
     # ====================== YOUR CODE HERE ======================
     # Instructions: First, for each feature dimension, compute the mean
     #               of the feature and subtract it from the dataset,
@@ -24,8 +26,10 @@ def featureNormalize(X):
     #
     # Hint: You might find the 'mean' and 'std' functions useful.
     #
-
-
+    for index, column in enumerate(X.T):
+        mu[index] = np.mean(column)
+        sigma[index] = np.std(column)
+        X_norm[:, index] = (X[:, index] - mu[index]) / sigma[index]
 # ============================================================
 
     return X_norm, mu, sigma

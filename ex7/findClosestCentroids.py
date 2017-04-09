@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import numpy as np
 
 
@@ -17,7 +18,7 @@ def findClosestCentroids(X, centroids):
 # Instructions: Go over every example, find its closest centroid, and store
 #               the index inside idx at the appropriate location.
 #               Concretely, idx(i) should contain the index of the centroid
-#               closest to example i. Hence, it should be a value in the 
+#               closest to example i. Hence, it should be a value in the
 #               range 1..K
 #
 # Note: You can use a for-loop over the examples to compute this.
@@ -26,4 +27,3 @@ def findClosestCentroids(X, centroids):
 # =============================================================
 
     return val, idx
-

@@ -1,4 +1,6 @@
+# -*- coding: utf-8 -*-
 from ex2.sigmoid import sigmoid
+
 
 def sigmoidGradient(z):
     """computes the gradient of the sigmoid function

@@ -1,7 +1,9 @@
+# -*- coding: utf-8 -*-
 import matplotlib.pyplot as plt
 
 from plotDataPoints import plotDataPoints
 from show import show
+
 
 def plotProgresskMeans(X, centroids, previous, idx, K, i, color):
     """plots the data
@@ -19,11 +21,10 @@ def plotProgresskMeans(X, centroids, previous, idx, K, i, color):
 
 # Plot the history of the centroids with lines
     for j in range(len(centroids)):
-        plt.plot([centroids[j,0], previous[j,0]],
-                 [centroids[j,1], previous[j,1]], c=color)
+        plt.plot([centroids[j, 0], previous[j, 0]],
+                 [centroids[j, 1], previous[j, 1]], c=color)
 
 # Title
     plt.title('Iteration number %d' % i)
     show()
     raw_input("Program paused. Press Enter to continue...")
-

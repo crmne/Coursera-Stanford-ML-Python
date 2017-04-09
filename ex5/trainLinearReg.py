@@ -1,12 +1,10 @@
-from scipy.optimize import minimize
-
+# -*- coding: utf-8 -*-
 import numpy as np
-
 from linearRegCostFunction import linearRegCostFunction
+from scipy.optimize import minimize
 
 
 def trainLinearReg(X, y, Lambda, method='CG', maxiter=200):
-
     """trains linear regression using
     the dataset (X, y) and regularization parameter lambda. Returns the
     trained parameters theta.
@@ -16,9 +14,11 @@ def trainLinearReg(X, y, Lambda, method='CG', maxiter=200):
     initial_theta = np.zeros(X.shape[1])
 
 # Create "short hand" for the cost function to be minimized
-    costFunction = lambda t: linearRegCostFunction(X, y, t, Lambda)[0]
-    gradFunction = lambda t: linearRegCostFunction(X, y, t, Lambda)[1]
+    def costFunction(t): return linearRegCostFunction(X, y, t, Lambda)[0]
 
-    result = minimize(costFunction, initial_theta, method=method, jac=None, options={'disp': True, 'maxiter': maxiter})
+    def gradFunction(t): return linearRegCostFunction(X, y, t, Lambda)[1]
+
+    result = minimize(costFunction, initial_theta, method=method,
+                      jac=None, options={'disp': True, 'maxiter': maxiter})
 
     return result.x
