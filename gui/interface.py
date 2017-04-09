@@ -1,5 +1,7 @@
 import os
-import pypandoc
+import subprocess
+import kivy
+kivy.require('1.8.0')
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
@@ -18,48 +20,9 @@ from kivy.clock import Clock
 from functools import partial
 from kivy.animation import Animation
 from Submission import Submission
+from resource_handle import resourceHandler
 
 
-class resourceHandler():
-    def __init__(self, **args):
-        pass
-
-
-    def read_token(self,instance):
-        path = '../'+instance.current_ex+'/token.txt'
-        try:
-            credentials = open(path)
-            instance.email = credentials.readline().strip()
-            instance.token = credentials.readline().strip()
-            return True
-        except Exception, e:
-            return False
-
-
-
-    def files(self,excercise):
-        path = 'res/'+excercise+'/sources.txt'
-        filehandler = open(path)
-        filelist=[]
-        while True:
-            try:
-                filelist.append(filehandler.next())
-            except Exception, e:
-                return filelist
-    def manual(self, excercise):
-        path = 'res/'+excercise+'/manual.md'
-        return pypandoc.convert(path,'rst')
-
-    def writeFile(self,excercise,filename):
-        path = '../'+excercise+'/'+filename
-        f=open(path,'w')
-        return f
-
-    def readFile(self,excercise,filename):
-        path = '../'+excercise+'/'+filename
-        #print 'Opening ',path
-        f=open(path,'r')
-        return f.read()
 
 class MainScreen(BoxLayout):
 
@@ -72,27 +35,29 @@ class MainScreen(BoxLayout):
         self.element=resourceHandler()
 
         if welcome:
-            welcome_popup = Popup(title='Coursera ML in Python', content=Label(text='Hello World'),size_hint=(1, 1))
+            welcome_popup = Popup(title='Coursera ML in Python', content=Label(text='Coursera Assignment App'),size_hint=(1, 1))
             self.add_widget(welcome_popup)
             welcome_popup.open()
             Clock.schedule_once(self.start_app,3)
         else:
-            self.bind(size=self.draw_screen)
+            self.bind(size=self.draw_mainscreen)
   
     def start_app(self,*args):
-        self.draw_screen()
-        self.bind(size=self.draw_screen)
+        self.draw_mainscreen()
+        self.bind(size=self.draw_mainscreen)
 
-    def draw_screen(self,*args):
+    def draw_mainscreen(self,*args):
         self.clear_widgets()
         self.add_widget(self.titlebar())
-        self.add_widget(self.maineditor())
-        scrollbar = ScrollView(size_hint=(1,None))
-        #TODO: Make filebar scrollable for smaller screens and many files
-        #scrollbar.add_widget(self.filebar())
-        #self.add_widget(scrollbar)
+        self.add_widget(self.maineditor('e'))
         self.add_widget(self.filebar())
         self.add_widget(self.console())
+
+    def draw_runscreen(self,*args):
+        self.clear_widgets()
+        self.add_widget(self.titlebar())
+        self.add_widget(self.maineditor('r'))
+
 
     def titlebar(self):
         layout=BoxLayout(padding='2sp',size_hint=(1,None),height='65sp')
@@ -123,7 +88,7 @@ class MainScreen(BoxLayout):
 
 
     def console(self):
-        layout = FloatLayout(size_hint=(1,None),height=100)
+        layout = FloatLayout(size_hint=(1,None),height=0)
         self.info_label = TextInput(size_hint=(1,None),readonly=True,background_color=(0,0,0,1),foreground_color=(1,1,1,1),opacity=0)
         self.info_label.text_size = self.size
         self.info_label.text = 'console'
@@ -162,7 +127,16 @@ class MainScreen(BoxLayout):
         print 'Email',self.submit_ob.__login
         print 'Token', self.submit_ob.__password
         self.submit_popup.dismiss()
-        #TODO:submission call
+
+        #TODO: save token and give submission call
+        command = ["python","../"+self.current_ex+"/"+"submit.py"]
+
+        process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        
+        output,error= process.communicate()
+        #self.show_error(output)
+        if not error == '':
+            self.show_error(error)
         #self.show_error(self.submit_ob.submit())
 
 
@@ -172,20 +146,36 @@ class MainScreen(BoxLayout):
         if current_file.endswith('\n'):
             current_file=current_file[:-1]
         self.current_file= current_file
-        self.draw_screen()
+        self.draw_mainscreen()
         print 'Current Exercise changed to: ', self.current_ex
 
 
 
     def run(self,instance):
         #TODO: Display output in popup
-        self.show_error('Cannot run')
+        #output = subprocess.check_output(["python","../"+self.current_ex+"/"+self.current_ex+".py"],stderr=subprocess.PIPE)
+        command = ["python","../"+self.current_ex+"/"+self.current_ex+".py"]
+        #self.show_message('Running Exercise',1)
+        print "Running"
+        process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+        
+        output , error= process.communicate()
+        #self.show_error(output)
+        if not error == '':
+            self.show_error(error)
+        
+        #while True:
+        #     #Bind self.info_label.text to output.stdout.readline()
+        #    self.show_error(process.stdout.readline())
+        #    if process.poll() is not None:
+        #        break
         print('The button <%s> is being pressed' % instance.text)
 
     
    
         
-    def maineditor(self):
+    def maineditor(self,*args):
         layout=BoxLayout()
         if self.width < self.height:
             layout.orientation='vertical'
@@ -204,11 +194,15 @@ class MainScreen(BoxLayout):
         splitter.add_widget(code)
         layout.add_widget(splitter)
 
-        layout.add_widget(RstDocument(text=man))
+        if args[0]=='e':
+            layout.add_widget(RstDocument(text=man))
+        else:
+
+            layout.add_widget(terminal)
         return layout
 
     def saveAssignment(self,assignment,*largs):
-        print 'callback called'
+        self.show_message('Autosaved',1)
         try:
             if not self.element.readFile(self.current_ex,self.current_file)==assignment.text:
                 filehandler = self.element.writeFile(self.current_ex,self.current_file)
@@ -232,28 +226,43 @@ class MainScreen(BoxLayout):
             
     
     def filebar(self):
-        layout=BoxLayout(padding='2sp',size_hint=(1,None),height='100sp')
-        layout.orientation='horizontal'
+
+        layout = GridLayout(rows=1, size_hint=(None,None))
+        layout.bind(minimum_width=layout.setter('width'))
+
         files = self.element.files(self.current_ex)
         for f in files:
             if f.strip() == self.current_file:
                 button = ToggleButton(text=f,group = self.current_ex,state='down')
             else:
                 button = ToggleButton(text=f,group = self.current_ex,state='normal')
+            button.width=200
+            button.size_hint=(None,1)
             button.bind(on_press=self.update_currentFile)
             layout.add_widget(button)
-        return layout
+
+        filebar = ScrollView(size_hint=(1,None), do_scroll_x=True, do_scroll_y=False )
+        filebar.add_widget(layout)
+        return filebar
+
 
     def update_currentFile(self,instance):
         if instance.text.endswith('\n'):
             instance.text=instance.text[:-1]
         self.current_file = instance.text
-        self.draw_screen()
+        self.draw_mainscreen()
         print 'Current file changed to: ', self.current_file
+
+    def show_message(self, msg,duration):
+        self.info_label.text = msg
+        anim = Animation(top=30.0, opacity=0.5, d=1) +\
+            Animation(top=30.0, d=duration) +\
+            Animation(top=0, opacity=0, d=1)        
+        anim.start(self.info_label)
 
     def show_error(self, e):
         self.info_label.text = str(e)
-        duration = len(self.info_label.text)/10
+        duration = len(self.info_label.text)/50
         anim = Animation(top=190.0, opacity=1, d=0.5) +\
             Animation(top=190.0, d=duration) +\
             Animation(top=0, opacity=0, d=2)        
@@ -264,7 +273,7 @@ class MainScreen(BoxLayout):
 class CourseraApp(App):
 
     def build(self):
-        return MainScreen(welcome=True)
+        return MainScreen(welcome=False)
     def on_pause(self):
         return True
 
