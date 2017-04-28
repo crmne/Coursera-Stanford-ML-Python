@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from numpy import sum, copy
-from costFunction import costFunction
+from .costFunction import costFunction
 
 
 def costFunctionReg(theta, X, y, Lambda):

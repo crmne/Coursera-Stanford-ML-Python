@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from gradientFunction import gradientFunction
+from .gradientFunction import gradientFunction
 from numpy import sum, copy
 
 

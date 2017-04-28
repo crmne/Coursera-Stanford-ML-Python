@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from numpy import sum
-from sigmoid import sigmoid
+from .sigmoid import sigmoid
 
 
 def gradientFunction(theta, X, y):

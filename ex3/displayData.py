@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib import use
 from show import show
 
 use('TkAgg')
 
+import matplotlib.pyplot as plt
 
 def displayData(X):
     """displays 2D data
@@ -14,12 +14,12 @@ def displayData(X):
 
 # Compute rows, cols
     m, n = X.shape
-    example_width = round(np.sqrt(n))
-    example_height = (n / example_width)
+    example_width = int(round(np.sqrt(n)))
+    example_height = int(n / example_width)
 
 # Compute number of items to display
-    display_rows = np.floor(np.sqrt(m))
-    display_cols = np.ceil(m / display_rows)
+    display_rows = int(np.floor(np.sqrt(m)))
+    display_cols = int(np.ceil(m / display_rows))
 
 # Between images padding
     pad = 1

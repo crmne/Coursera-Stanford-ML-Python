@@ -54,7 +54,7 @@ sel = X[rand_indices[0:100], :]
 
 displayData(sel)
 
-raw_input("Program paused. Press Enter to continue...")
+input("Program paused. Press Enter to continue...")
 
 # ============ Part 2: Vectorize Logistic Regression ============
 #  In this part of the exercise, you will reuse your logistic regression
@@ -69,7 +69,7 @@ print('Training One-vs-All Logistic Regression...')
 Lambda = 0.1
 all_theta = oneVsAll(X, y, num_labels, Lambda)
 
-raw_input("Program paused. Press Enter to continue...")
+input("Program paused. Press Enter to continue...")
 
 
 # ================ Part 3: Predict for One-Vs-All ================
