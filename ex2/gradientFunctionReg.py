@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from gradientFunction import gradientFunction
-from numpy import sum
+from numpy import sum, copy
 
 
 def gradientFunctionReg(theta, X, y, Lambda):
@@ -16,7 +16,9 @@ def gradientFunctionReg(theta, X, y, Lambda):
     # Instructions: Compute the gradient of a particular choice of theta.
     #               Compute the partial derivatives and set grad to the partial
     #               derivatives of the cost w.r.t. each parameter in theta
-    grad = sum(gradientFunction(theta, X, y) + sum((Lambda / m) * theta[1:]))
+    theta_reg = copy(theta)
+    theta_reg[0] = 0
+    grad = gradientFunction(theta, X, y) + ((Lambda / m) * theta_reg)
     # =============================================================
 
     return grad

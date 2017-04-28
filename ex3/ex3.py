@@ -1,13 +1,17 @@
 # -*- coding: utf-8 -*-
 # Machine Learning Online Class - Exercise 3 | Part 1: One-vs-all
+import os
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from matplotlib import use
+use('TkAgg')
+
 import numpy as np
 import scipy.io
 from displayData import displayData
-from matplotlib import use
 from oneVsAll import oneVsAll
 from predictOneVsAll import predictOneVsAll
-
-use('TkAgg')
 
 
 #  Instructions
@@ -37,7 +41,7 @@ num_labels = 10          # 10 labels, from 1 to 10
 #
 
 # Load Training Data
-print 'Loading and Visualizing Data ...'
+print('Loading and Visualizing Data ...')
 
 data = scipy.io.loadmat('ex3data1.mat')  # training data stored in arrays X, y
 X = data['X']
@@ -60,7 +64,7 @@ raw_input("Program paused. Press Enter to continue...")
 #  digit dataset.
 #
 
-print 'Training One-vs-All Logistic Regression...'
+print('Training One-vs-All Logistic Regression...')
 
 Lambda = 0.1
 all_theta = oneVsAll(X, y, num_labels, Lambda)
@@ -73,4 +77,4 @@ raw_input("Program paused. Press Enter to continue...")
 pred = predictOneVsAll(all_theta, X)
 
 accuracy = np.mean(np.double(pred == np.squeeze(y))) * 100
-print '\nTraining Set Accuracy: %f\n' % accuracy
+print('\nTraining Set Accuracy: %f\n' % accuracy)

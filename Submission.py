@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 try:
     from urllib import urlencode
+    from urllib2 import urlopen
 except ImportError:
     from urllib.parse import urlencode
-from urllib2 import urlopen
+    from urllib.request import urlopen
 from json import loads, dumps
 from collections import OrderedDict
 import numpy as np

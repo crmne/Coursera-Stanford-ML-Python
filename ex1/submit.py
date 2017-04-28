@@ -2,11 +2,11 @@
 import os
 import sys
 
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 import importlib
 import numpy as np
 from Submission import Submission, sprintf
-
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
 __all__ = ['submit']

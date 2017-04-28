@@ -17,7 +17,7 @@ def gradientFunction(theta, X, y):
     # Instructions: Compute the gradient of a particular choice of theta.
     #               Compute the partial derivatives and set grad to the partial
     #               derivatives of the cost w.r.t. each parameter in theta
-    grad = (1 / m) * sum(X.T.dot(sigmoid(X.dot(theta)) - y))
+    grad = (1 / m) * X.T.dot(sigmoid(X.dot(theta)) - y)
     # =============================================================
 
     return grad

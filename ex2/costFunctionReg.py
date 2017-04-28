@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from numpy import sum
+from numpy import sum, copy
 from costFunction import costFunction
 
 
@@ -18,7 +18,9 @@ def costFunctionReg(theta, X, y, Lambda):
     #               You should set J to the cost.
     #               Compute the partial derivatives and set grad to the partial
     #               derivatives of the cost w.r.t. each parameter in theta
-    J = costFunction(theta, X, y) + ((Lambda / (2 * m)) * sum(theta**2))
+    theta_reg = copy(theta)
+    theta_reg[0] = 0
+    J = costFunction(theta, X, y) + ((Lambda / (2 * m)) * sum(theta_reg**2))
     # =============================================================
 
     return J

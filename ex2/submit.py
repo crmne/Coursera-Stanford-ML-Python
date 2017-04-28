@@ -1,4 +1,9 @@
 # -*- coding: utf-8 -*-
+import os
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+import importlib
 import numpy as np
 from Submission import Submission, sprintf
 
@@ -32,7 +37,7 @@ def output(part_id):
     Y = np.sin(X[:, 0] + X[:, 1]) > 0
 
     fname = srcs[part_id - 1].rsplit('.', 1)[0]
-    mod = __import__(fname, fromlist=[fname], level=1)
+    mod = importlib.__import__(fname, fromlist=[fname], level=0)
     func = getattr(mod, fname)
 
     if part_id == 1:
@@ -55,4 +60,4 @@ try:
 except Exception as ex:
     template = "An exception of type {0} occured. Messsage:\n{1!r}"
     message = template.format(type(ex).__name__, ex.args)
-    print message
+    print(message)
